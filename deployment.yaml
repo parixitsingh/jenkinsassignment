@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-service
+  labels:
+    app: javasvc
+spec:
+  selector:
+    app: javasvc
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javasvc
+  labels:
+    app: javasvc
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: javasvc
+  template:
+    metadata:
+      labels:
+        app: javasvc
+    spec:
+      containers:
+      - name: javasvc
+        image: "pstsingh5/iparixitsinghmain:latest"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
