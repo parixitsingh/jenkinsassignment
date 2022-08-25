@@ -33,7 +33,7 @@ pipeline {
                         // dir(env.BUILD_DIR) {
                             script {
                                 checkout scm
-                                BRANCH_NAME = scm.branches[0].name.replace(`*\`, '')
+                                BRANCH_NAME = scm.branches[0].name.replace("*\\", '')
                             }
                         // }
                     }
