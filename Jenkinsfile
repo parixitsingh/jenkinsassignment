@@ -62,7 +62,8 @@ pipeline {
         }
 
         stage ('analysis') {
-            script {
+            steps {
+                script {
                     if (env.BRANCH_NAME == 'main') {
                         bat 'mvn test'
                     } else {
@@ -71,6 +72,7 @@ pipeline {
                         }
                     }
                 }
+            }
         }
 
         // stage ('Unit Testing') {
