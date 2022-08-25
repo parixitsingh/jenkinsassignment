@@ -66,6 +66,11 @@
 			<artifactId>spring-boot-maven-plugin</artifactId>
             <configuration>
 				<finalName>nagpband3</finalName>
+				<archive>  
+                    <manifest>  
+                        <mainClass>com.example.NagpBand3Application</mainClass>  
+                    </manifest>  
+                </archive>  
             </configuration>
 			</plugin>
 		</plugins>
