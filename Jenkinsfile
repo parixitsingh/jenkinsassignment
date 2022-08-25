@@ -117,7 +117,7 @@ pipeline {
             steps {
                 script {
                     echo 'deployment start'
-                    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.KUBERNETES_CREDENTIALS_ID, verifyDeployments: true])
+                    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.KUBERNETES_CREDENTIALS_ID, verifyDeployments: false])
                     echo 'deployment ends'
                 }
             }
