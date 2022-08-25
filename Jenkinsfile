@@ -50,47 +50,48 @@ pipeline {
         }
 
         stage ('Build') {
-            script {
-                steps {
-                    // deleteDir()
-                    // unstash 'source'
-                    // dir(env.BUILD_DIR) {
-                        script {
-                            bat 'mvn clean install'
-                        }
-                    // }
-
-                    nextStep = 'Unit Testing'
-                    
-                    if (env.BRANCH_NAME != 'main') {
-                        nextStep = 'Sonar Analysis'
+            steps {
+                // deleteDir()
+                // unstash 'source'
+                // dir(env.BUILD_DIR) {
+                    script {
+                        bat 'mvn clean install'
                     }
-                }
+                // }
             }
         }
 
-        stage (nextStep){
+        stage ('analysis') {
             script {
-                if (env.BRANCH_NAME != 'main') {
-                    steps {
-                        // deleteDir()
-                        // unstash 'source'
-                        // dir(env.BUILD_DIR) {
-                            script {
-                                bat 'mvn test'
-                            }
-                        // }
-                    }
-                } else {
-                    steps {
+                    if (env.BRANCH_NAME == 'main') {
+                        bat 'mvn test'
+                    } else {
                         withSonarQubeEnv("Test_Sonar") {
                             bat 'mvn sonar:sonar'
                         }
                     }
                 }
-            }
-            
         }
+
+        // stage ('Unit Testing') {
+        //     steps {
+        //         // deleteDir()
+        //         // unstash 'source'
+        //         // dir(env.BUILD_DIR) {
+        //             script {
+        //                 bat 'mvn test'
+        //             }
+        //         // }
+        //     }
+        // }
+
+        // stage ("Sonar Analysis") {
+        //     steps {
+        //         withSonarQubeEnv("Test_Sonar") {
+        //             bat 'mvn sonar:sonar'
+        //         }
+        //     }
+        // }
         
         stage ('Docker Image') {
             steps {
