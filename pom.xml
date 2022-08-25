@@ -11,8 +11,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>nagpband3</artifactId>
 	<version>1</version>
-	<packaging>war</packaging>
-	<name>nagpband3-exe</name>
+	<packaging>jar</packaging>
+	<name>nagpband3</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -66,6 +66,11 @@
 			<artifactId>spring-boot-maven-plugin</artifactId>
             <configuration>
 				<finalName>nagpband3</finalName>
+				<archive>  
+                    <manifest>  
+                        <mainClass>com.example.NagpBand3Application</mainClass>  
+                    </manifest>  
+                </archive>  
             </configuration>
 			</plugin>
 		</plugins>
