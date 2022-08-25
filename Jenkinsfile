@@ -21,7 +21,7 @@ pipeline {
         LOCATION = 'us-central1'
         KUBERNETES_CREDENTIALS_ID = 'gsaccount'
         DOCKER_CREDENTIALS_ID = "dockerhub"
-        BRANCH_NAME = '' //bat (script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+        //BRANCH_NAME = '' //bat (script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
     }
 
     stages {
@@ -33,8 +33,7 @@ pipeline {
                         // dir(env.BUILD_DIR) {
                             script {
                                 checkout scm
-                                env.BRANCH_NAME = scm.branches[0].name
-                                echo scm.branches
+                                BRANCH_NAME = scm.branches[0].name
                             }
                         // }
                     }
@@ -57,7 +56,6 @@ pipeline {
                 // unstash 'source'
                 // dir(env.BUILD_DIR) {
                     script {
-                        echo env.BRANCH_NAME
                         bat 'mvn clean install'
                     }
                 // }
@@ -67,7 +65,7 @@ pipeline {
         stage ('Unit Testing') {
             when {
                 expression {
-                    return env.BRANCH_NAME == 'main';
+                    return BRANCH_NAME == '*/main';
                 }
             }
             steps {
@@ -84,7 +82,7 @@ pipeline {
         stage ("Sonar Analysis") {
             when {
                 expression {
-                    return env.BRANCH_NAME == 'develop';
+                    return BRANCH_NAME == '*/develop';
                 }
             }
             steps {
