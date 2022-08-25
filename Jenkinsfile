@@ -22,7 +22,6 @@ pipeline {
         KUBERNETES_CREDENTIALS_ID = 'gsaccount'
         DOCKER_CREDENTIALS_ID = "dockerhub"
         BRANCH_NAME =  bat (script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
-        ANALYSIS_STAGE = unitTestORSonarStage()
     }
 
     stages {
@@ -62,39 +61,31 @@ pipeline {
             }
         }
 
-        stage (env.ANALYSIS_STAGE) {
+        stage ('Unit Testing') {
+            when {
+                branch 'main'
+            }
             steps {
-                script {
-                    if (env.BRANCH_NAME == 'main') {
+                // deleteDir()
+                // unstash 'source'
+                // dir(env.BUILD_DIR) {
+                    script {
                         bat 'mvn test'
-                    } else {
-                        withSonarQubeEnv("Test_Sonar") {
-                            bat 'mvn sonar:sonar'
-                        }
                     }
-                }
+                // }
             }
         }
 
-        // stage ('Unit Testing') {
-        //     steps {
-        //         // deleteDir()
-        //         // unstash 'source'
-        //         // dir(env.BUILD_DIR) {
-        //             script {
-        //                 bat 'mvn test'
-        //             }
-        //         // }
-        //     }
-        // }
-
-        // stage ("Sonar Analysis") {
-        //     steps {
-        //         withSonarQubeEnv("Test_Sonar") {
-        //             bat 'mvn sonar:sonar'
-        //         }
-        //     }
-        // }
+        stage ("Sonar Analysis") {
+            when {
+                branch 'develop'
+            }
+            steps {
+                withSonarQubeEnv("Test_Sonar") {
+                    bat 'mvn sonar:sonar'
+                }
+            }
+        }
         
         stage ('Docker Image') {
             steps {
@@ -136,13 +127,4 @@ pipeline {
             junit 'target/surefire-reports/*.xml'
         }
     }
-}
-
-string unitTestORSonarStage() {
-   switch (env.BRANCH_NAME) {
-      case 'main':
-         return 'Unit testing'
-      default:
-         return 'Sonar analysis'
-   }
 }
