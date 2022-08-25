@@ -61,7 +61,7 @@ pipeline {
             }
         }
 
-        stage ('analysis') {
+        stage (unitTestORSonarStage()) {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
@@ -135,4 +135,13 @@ pipeline {
             junit 'target/surefire-reports/*.xml'
         }
     }
+}
+
+String unitTestORSonarStage() {
+   switch (env.BRANCH_NAME) {
+      case 'main':
+         return 'Unit testing'
+      default:
+         return 'Sonar analysis'
+   }
 }
