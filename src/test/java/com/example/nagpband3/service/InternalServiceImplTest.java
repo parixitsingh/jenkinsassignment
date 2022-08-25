@@ -5,17 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.nagpband3.service.concrete.ResponseServiceConcrete;
+import com.example.nagpband3.service.impl.InternalServiceImpl;
 
 @SpringBootTest
-public class ResponseServiceConcreteTest {
+public class InternalServiceImplTest {
 
 	@Autowired
-	private ResponseServiceConcrete instance;
+	private InternalServiceImpl internalServiceImpl;
 	
 	@Test
 	public void testHelloWorld() {
-		String testName = instance.helloWorld();
-		Assert.assertEquals("Hello World, I'm Nagp Exercise", testName);
+		String testName = internalServiceImpl.helloWorld();
+		Assert.assertEquals("Hello World", testName);
 	}
 }

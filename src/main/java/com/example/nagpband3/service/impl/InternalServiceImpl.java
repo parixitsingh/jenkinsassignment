@@ -2,10 +2,10 @@ package com.example.nagpband3.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.example.nagpband3.service.ResponseService;
+import com.example.nagpband3.service.InternalService;
 
 @Service
-public class ResponseServiceConcrete implements ResponseService {
+public class InternalServiceImpl implements InternalService {
 
 	@Override
 	public String helloWorld() {

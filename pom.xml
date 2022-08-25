@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>nagp-band-3</artifactId>
+	<artifactId>nagpband3</artifactId>
 	<version>1</version>
 	<packaging>war</packaging>
-	<name>nagp-band-3-exe</name>
+	<name>nagpband3-exe</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

@@ -1,6 +1,6 @@
 package com.example.nagpband3.service;
 
-public interface ResponseService {
+public interface InternalService {
 
 	public String helloWorld();
 }
