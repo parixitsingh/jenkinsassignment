@@ -34,7 +34,7 @@ pipeline {
                             script {
                                 checkout scm
                                 env.BRANCH_NAME = scm.branches[0].name
-
+                                echo scm.branches
                             }
                         // }
                     }
