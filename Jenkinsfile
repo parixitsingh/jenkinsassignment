@@ -63,7 +63,9 @@ pipeline {
 
         stage ('Unit Testing') {
             when {
-                branch 'main'
+                expression {
+                    return env.BRANCH_NAME == 'main';
+                }
             }
             steps {
                 // deleteDir()
@@ -78,7 +80,9 @@ pipeline {
 
         stage ("Sonar Analysis") {
             when {
-                branch 'develop'
+                expression {
+                    return env.BRANCH_NAME == 'develop';
+                }
             }
             steps {
                 withSonarQubeEnv("Test_Sonar") {
