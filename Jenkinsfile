@@ -62,7 +62,7 @@ pipeline {
             }
         }
 
-        stage (ANALYSIS_STAGE) {
+        stage (env.ANALYSIS_STAGE) {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'main') {
