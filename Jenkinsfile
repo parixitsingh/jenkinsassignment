@@ -50,25 +50,28 @@ pipeline {
         }
 
         stage ('Build') {
-            steps {
-                // deleteDir()
-                // unstash 'source'
-                // dir(env.BUILD_DIR) {
-                    script {
-                        bat 'mvn clean install'
+            script {
+                steps {
+                    // deleteDir()
+                    // unstash 'source'
+                    // dir(env.BUILD_DIR) {
+                        script {
+                            bat 'mvn clean install'
+                        }
+                    // }
+
+                    nextStep = 'Unit Testing'
+                    
+                    if (env.BRANCH_NAME != 'main') {
+                        nextStep = 'Sonar Analysis'
                     }
-                // }
-
-                nextStep = 'Unit Testing'
-
-                if (env.BRANCH_NAME != 'main') {
-                    nextStep = 'Sonar Analysis'
                 }
             }
         }
 
         stage (nextStep){
-             if (env.BRANCH_NAME != 'main') {
+            script {
+                if (env.BRANCH_NAME != 'main') {
                     steps {
                         // deleteDir()
                         // unstash 'source'
@@ -78,13 +81,14 @@ pipeline {
                             }
                         // }
                     }
-               } else {
+                } else {
                     steps {
                         withSonarQubeEnv("Test_Sonar") {
                             bat 'mvn sonar:sonar'
                         }
                     }
-               }
+                }
+            }
             
         }
         
