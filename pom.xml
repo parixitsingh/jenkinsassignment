@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>nagpband3</artifactId>
 	<version>1</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>nagpband3-exe</name>
 	<description>Demo project for Spring Boot</description>
 
