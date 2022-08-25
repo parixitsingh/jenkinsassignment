@@ -21,7 +21,7 @@ pipeline {
         LOCATION = 'us-central1'
         KUBERNETES_CREDENTIALS_ID = 'gsaccount'
         DOCKER_CREDENTIALS_ID = "dockerhub"
-        BRANCH_NAME =  bat (script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+        BRANCH_NAME =  scm.branches[0].name//bat (script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
     }
 
     stages {
