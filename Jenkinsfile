@@ -116,12 +116,9 @@ pipeline {
         stage ('Kubernetes deployment'){
             steps {
                 script {
-                   // bat 'bash sed -e "s~BRANCH_NAME_VAR~main~g" "deployment.yaml" > "deploy.yaml"'
-                 //   bat 'bash script.sh -b %env.BRANCH_NAME%'
-
-                    withKubeConfig([credentialsId: env.KUBERNETES_CREDENTIALS_ID, clusterName: env.CLUSTER_NAME]) {
-                        bat 'kubectl apply -f deploy.yaml --context kubernetes-cluster-parixitsingh'
-                    }
+                    echo 'deployment start'
+                    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.KUBERNETES_CREDENTIALS_ID, verifyDeployments: true])
+                    echo 'deployment ends'
                 }
             }
         }
