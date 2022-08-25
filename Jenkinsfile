@@ -61,7 +61,7 @@ pipeline {
             }
         }
 
-        stages {
+        stage {
              if (env.BRANCH_NAME != 'main') {
                     stage ('Unit Testing') {
                         steps {
