@@ -138,7 +138,7 @@ pipeline {
     }
 }
 
-String unitTestORSonarStage() {
+string unitTestORSonarStage() {
    switch (env.BRANCH_NAME) {
       case 'main':
          return 'Unit testing'
