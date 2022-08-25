@@ -33,7 +33,7 @@ pipeline {
                         // dir(env.BUILD_DIR) {
                             script {
                                 checkout scm
-                                BRANCH_NAME = scm.branches[0].name
+                                BRANCH_NAME = scm.branches[0].name.replace(`*\`, '')
                             }
                         // }
                     }
@@ -98,7 +98,7 @@ pipeline {
                     withDockerServer([uri:'tcp://localhost:2375', credentialsId: env.DOCKER_CREDENTIALS_ID]) {
                         withDockerRegistry([credentialsId: env.DOCKER_CREDENTIALS_ID, url: "https://docker.io/"]) {
                             bat 'docker login -u pstsingh5 -p Prat@2208'                
-                            bat 'docker build -t pstsingh5/iparixitsingh%env.BRANCH_NAME%:latest --no-cache -f Dockerfile .'
+                            bat 'docker build -t pstsingh5/iparixitsingh%BRANCH_NAME%:latest --no-cache -f Dockerfile .'
                         }
                     }   
                 }
@@ -108,7 +108,7 @@ pipeline {
         stage ('Upload docker image') {
             steps {
                 script {
-                    bat 'docker push pstsingh5/iparixitsingh%env.BRANCH_NAME%:latest'
+                    bat 'docker push pstsingh5/iparixitsingh%BRANCH_NAME%:latest'
                 }
             }
         }
