@@ -61,24 +61,29 @@ pipeline {
             }
         }
 
-        stage ('Unit Testing') {
-            steps {
-                // deleteDir()
-                // unstash 'source'
-                // dir(env.BUILD_DIR) {
-                    script {
-                        bat 'mvn test'
+        stages {
+             if (env.BRANCH_NAME != 'main') {
+                    stage ('Unit Testing') {
+                        steps {
+                            // deleteDir()
+                            // unstash 'source'
+                            // dir(env.BUILD_DIR) {
+                                script {
+                                    bat 'mvn test'
+                                }
+                            // }
+                        }
                     }
-                // }
-            }
-        }
-
-        stage ("Sonar Analysis") {
-            steps {
-                withSonarQubeEnv("Test_Sonar") {
-                    bat 'mvn sonar:sonar'
-                }
-            }
+               } else {
+                    stage ("Sonar Analysis") {
+                        steps {
+                            withSonarQubeEnv("Test_Sonar") {
+                                bat 'mvn sonar:sonar'
+                            }
+                        }
+                    }
+               }
+            
         }
         
         stage ('Docker Image') {
