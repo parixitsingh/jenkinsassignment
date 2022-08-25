@@ -66,7 +66,7 @@ pipeline {
         stage ('Unit Testing') {
             when {
                 expression {
-                    return BRANCH_NAME == 'main';
+                    return BRANCH_NAME == 'master';
                 }
             }
             steps {
