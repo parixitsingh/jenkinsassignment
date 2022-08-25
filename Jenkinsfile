@@ -55,6 +55,7 @@ pipeline {
                 // unstash 'source'
                 // dir(env.BUILD_DIR) {
                     script {
+                        echo env.BRANCH_NAME
                         bat 'mvn clean install'
                     }
                 // }
